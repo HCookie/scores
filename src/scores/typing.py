@@ -3,7 +3,9 @@ This module contains various compound or union types which can be used across th
 a consistent approach to typing is handled.
 """
 from collections.abc import Hashable, Iterable
-from typing import Optional, Union
+from typing import Any, Optional, Union
+
+import warnings
 
 import pandas as pd
 import xarray as xr
@@ -21,3 +23,22 @@ XarrayLike = Union[xr.DataArray, xr.Dataset]
 # the function they are used in
 
 FlexibleArrayType = Union[XarrayLike, pd.Series]
+
+
+# Warning of incorrect types
+class TypeWarning(Warning):
+    """Warning for types being not what was expected."""
+
+
+def warn_type(obj: Any, valid_types: Union[tuple[type, ...], type]) -> bool:
+    """Check if given `obj` is of the `valid_types`. Raises warning and returns False if not."""
+
+    from typing import _UnionGenericAlias
+
+    if isinstance(valid_types, _UnionGenericAlias):
+        valid_types = valid_types.__args__
+
+    if not isinstance(obj, valid_types):
+        warnings.warn(f"Expected object of type/s {valid_types!r}, but got {type(obj)}.", TypeWarning)
+        return False
+    return True
