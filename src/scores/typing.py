@@ -26,7 +26,7 @@ FlexibleArrayType = Union[XarrayLike, pd.Series]
 
 
 # Warning of incorrect types
-class TypeWarning(Warning):
+class TypeWarning(UserWarning):
     """Warning for types being not what was expected."""
 
 
