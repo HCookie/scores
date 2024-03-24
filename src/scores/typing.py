@@ -31,7 +31,24 @@ class TypeWarning(Warning):
 
 
 def warn_type(obj: Any, valid_types: Union[tuple[type, ...], type]) -> bool:
-    """Check if given `obj` is of the `valid_types`. Raises warning and returns False if not."""
+    """Check if given `obj` is of the `valid_types`. Raises warning and returns False if not.
+    
+    Accepts either a type or tuple of types, and can support Union's from `typing`.
+    
+    Examples:
+        >>> warn_type([1], list)
+        True
+        
+        >>> warn_type([1], (tuple, list))
+        True
+        
+        >>> warn_type([1], (tuple,))
+        False
+        
+        >>> from typing import Union
+        >>> warn_type([1], Union[tuple, list])
+        True
+    """
 
     from typing import _UnionGenericAlias
 
