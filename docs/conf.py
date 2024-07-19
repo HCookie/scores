@@ -23,6 +23,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "nbsphinx",
     "sphinx_gallery.load_style",
+    "notfound.extension",
 ]
 source_suffix = [".rst", ".md"]
 
@@ -95,3 +96,9 @@ nbsphinx_epilog = r"""
     \textcolor{gray}{\dotfill\ \sphinxcode{\sphinxupquote{\strut
     {{ docname | escape_latex }}}} ends here.}}
 """
+
+# Processed by notfound.extension to make 404 page
+notfound_context = {
+    'title': 'Page not found',
+    'body': "<h1>Page not found</h1>\n\nUnfortunately we couldn't find the content you were looking for.",
+}
